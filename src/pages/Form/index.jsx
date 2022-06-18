@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 import { createNominations } from "../../services";
-// import "./form.css";
+import "./form.css";
 
 const Form = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
