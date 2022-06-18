@@ -1,17 +1,19 @@
 import { useForm } from "react-hook-form";
+import { useState } from "react";
 
 import { createNominations } from "../../services";
-//import "./form.css";
+// import "./form.css";
 
 const Form = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [response, setResponseStatus] = useState();
 
     const memberId = "fd74c127-9d51-4d61-8539-69633d6d7f7f"
 
     const handleClickSubmit = async ({ email, description, talent, involvement }) => {
         const response = await createNominations(memberId, { email, description, score: { talent, involvement } });
+        setResponseStatus(response)
     };
-
 
     return (
         <div className="create_nomination_page">
@@ -28,10 +30,9 @@ const Form = () => {
                             },
                         })}
                     />
+                    {errors.email && errors.email.type === "required" && <span className="form_error">This field is required</span>}
+                    {errors.email && errors.email.type === "pattern" ? (<span className="form_error">This is not an email</span>) : null}
                 </div>
-
-                {errors.email && errors.email.type === "required" && <p>This field is required</p>}
-                {errors.email && errors.email.type === "pattern" ? (<p>This is not an email</p>) : null}
 
                 <div className="input_description_container">
                     <textarea
@@ -47,7 +48,7 @@ const Form = () => {
                     />
                 </div>
 
-                {errors.description && errors.description.type === "maxLength" && <span>Max length exceeded</span>}
+                {errors.description && errors.description.type === "maxLength" && <span className="form_error">Max length exceeded</span>}
 
                 <div className="input_talent_container">
                     <label className="slider_label">Talent</label>
@@ -57,12 +58,13 @@ const Form = () => {
                         type="range"
                         min="0"
                         max="10"
-                        defaultValue="5"
+                        defaultValue="0"
                         className="input_talent"
                         step="1"
                         {...register("talent")}
                     />
                 </div>
+
                 <div className="input_involvement_container">
                     <label className="slider_label">Involvement</label>
                     <input
@@ -70,7 +72,7 @@ const Form = () => {
                         type="range"
                         min="0"
                         max="10"
-                        defaultValue="5"
+                        defaultValue="0"
                         className="input_involvement"
                         step="1"
                         {...register("involvement")}
@@ -81,11 +83,11 @@ const Form = () => {
 
                 <input className="input_submit" type="submit" value="SEND" />
             </form>
+            {response && response.status === 200 ? <span className="nomination_alert_succed">Nomination created.</span> : ""}
+            {response && response.status !== 200 ? <span className="nominatin_alert_failed">An error occurred</span> : ""}
+
         </div>
     )
 };
 
 export default Form;
-
-//<input placeholder="talent" {...register("talent", { required: true, pattern: { value: /^[0-9+-]+$/ } })} />
-//<input placeholder="involvement" {...register("involvement", { required: true, pattern: { value: /^[0-9+-]+$/ } })} />
