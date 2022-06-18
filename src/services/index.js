@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { getAllNonRejectedNoms } from "./nominations";
+import { getAllNonRejectedNoms, createNewNominations } from "./nominations";
 
 const client = axios.create({
     baseURL: process.env.REACT_APP_BACK_URL,
@@ -10,5 +10,6 @@ const client = axios.create({
 });
 
 const getAllNonRejectedNominations = getAllNonRejectedNoms(client);
+const createNominations = createNewNominations(client);
 
-export { getAllNonRejectedNominations };
+export { getAllNonRejectedNominations, createNominations };

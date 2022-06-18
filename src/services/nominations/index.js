@@ -7,4 +7,13 @@ const getAllNonRejectedNoms = ({ get }) => async () => {
     }
 }
 
-export { getAllNonRejectedNoms };
+const createNewNominations = ({ post }) => async (memberId, params) => {
+    try {
+        return (await post(`/members/${memberId}/nominations`, params));
+    } catch (error) {
+        console.log("Cannot create new nominatin");
+        return false;
+    }
+};
+
+export { getAllNonRejectedNoms, createNewNominations };
