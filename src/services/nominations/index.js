@@ -3,7 +3,7 @@ const getAllNonRejectedNoms = ({ get }) => async () => {
         return (await get(`/nominations`)).data;
     } catch (error) {
         console.log("Cannot get products");
-        return false;
+        return error.response;
     }
 }
 
@@ -12,7 +12,8 @@ const createNewNominations = ({ post }) => async (memberId, params) => {
         return (await post(`/members/${memberId}/nominations`, params));
     } catch (error) {
         console.log("Cannot create new nominatin");
-        return false;
+        console.log(error);
+        return error.response;
     }
 };
 

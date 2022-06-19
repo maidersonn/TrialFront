@@ -2,17 +2,23 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 
 import { createNominations } from "../../services";
-import "./form.css";
+import "./createNominations.css";
 
 const Form = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, watch, handleSubmit, formState: { errors } } = useForm();
     const [response, setResponseStatus] = useState();
-
+    const watchShowAge = watch(["talent", "involvement"]);
     const memberId = "fd74c127-9d51-4d61-8539-69633d6d7f7f"
 
     const handleClickSubmit = async ({ email, description, talent, involvement }) => {
         const response = await createNominations(memberId, { email, description, score: { talent, involvement } });
-        setResponseStatus(response)
+        setResponseStatus(response);
+    };
+
+    const errorMessage = (statusCode) => {
+        if (statusCode === 409) return "Nomination already exists";
+        else if (statusCode === 400) return "Given data failed";
+        else return "An error occurred";
     };
 
     return (
@@ -51,8 +57,7 @@ const Form = () => {
                 {errors.description && errors.description.type === "maxLength" && <span className="form_error">Max length exceeded</span>}
 
                 <div className="input_talent_container">
-                    <label className="slider_label">Talent</label>
-
+                    <label className="slider_label">Talent: {watchShowAge[0] || 0}</label>
                     <input
                         name="talent"
                         type="range"
@@ -66,7 +71,7 @@ const Form = () => {
                 </div>
 
                 <div className="input_involvement_container">
-                    <label className="slider_label">Involvement</label>
+                    <label className="slider_label">Involvement: {watchShowAge[1] || 0}</label>
                     <input
                         name="involvement"
                         type="range"
@@ -77,17 +82,16 @@ const Form = () => {
                         step="1"
                         {...register("involvement")}
                     />
-
-
                 </div>
 
                 <input className="input_submit" type="submit" value="SEND" />
             </form>
             {response && response.status === 200 ? <span className="nomination_alert_succed">Nomination created.</span> : ""}
-            {response && response.status !== 200 ? <span className="nominatin_alert_failed">An error occurred</span> : ""}
+            {response && response.status !== 200 ? <span className="nominatin_alert_failed">{errorMessage(response.status)}</span> : ""}
 
         </div>
     )
 };
+
 
 export default Form;
