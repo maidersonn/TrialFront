@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 
-import Nominations from "./pages/Nominatins";
+import Nominations from "./pages/Nominations";
 import CreateNominations from "./pages/CreateNominations";
 import Home from "./pages/Home";
 

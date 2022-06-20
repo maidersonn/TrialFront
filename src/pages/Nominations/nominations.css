@@ -1,12 +1,12 @@
-.nominations {
+.nominations_page {
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: rgb(161, 185, 223);
-    height: 100vh;
+    min-height: 100vh;
 }
 
-.nominations_title {
+.nominations_page_title {
     margin-top: 6rem;
     margin-bottom: 4rem;
     font-size: 2rem;

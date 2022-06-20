@@ -14,8 +14,9 @@ const Nominations = () => {
     }, []);
 
     return (
-        <section className="nominations">
-            <h1 className="nominations_title">This is the list of non rejected nominations.</h1>
+
+        <section className="nominations_page">
+            <h1 className="nominations_page_title">This is the list of non rejected nominations.</h1>
             <table className="table">
                 <colgroup>
                     <col className="email_column"></col>

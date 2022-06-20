@@ -8,16 +8,16 @@ const Form = () => {
     const { register, watch, handleSubmit, formState: { errors } } = useForm();
     const [response, setResponseStatus] = useState();
     const watchShowAge = watch(["talent", "involvement"]);
-    const memberId = "fd74c127-9d51-4d61-8539-69633d6d7f7f"
+    const memberId = "ef600d9a-e7d5-40e1-9d2b-3f3be78af4b5";
 
     const handleClickSubmit = async ({ email, description, talent, involvement }) => {
         const response = await createNominations(memberId, { email, description, score: { talent, involvement } });
         setResponseStatus(response);
     };
 
-    const errorMessage = (statusCode) => {
-        if (statusCode === 409) return "Nomination already exists";
-        else if (statusCode === 400) return "Given data failed";
+    const errorMessage = ({ status, data }) => {
+        if (status === 409) return data.message;
+        else if (status === 400) return data.message;
         else return "An error occurred";
     };
 
@@ -87,7 +87,7 @@ const Form = () => {
                 <input className="input_submit" type="submit" value="SEND" />
             </form>
             {response && response.status === 200 ? <span className="nomination_alert_succed">Nomination created.</span> : ""}
-            {response && response.status !== 200 ? <span className="nominatin_alert_failed">{errorMessage(response.status)}</span> : ""}
+            {response && response.status !== 200 ? <span className="nominatin_alert_failed">{errorMessage(response)}</span> : ""}
 
         </div>
     )
