@@ -30,11 +30,12 @@ Ejecutar en la terminal :
 ## Mejoras
 - Meter una librería de formateo de fechas. 
 - Mejorar el feedback hacia el usuario a la hora de crear nominaciones.
+- Paginación en nominaciones.
+- Poder actualizar la lista de nominaciones desde la página misma. 
 - Hacer el responsive design.
 - Hacer que se vea igual en todos los navegadores. 
 - Gestinar los errores que puedan venir del api en la página de mostrar lista de nominaciones.
 - Testing.
-- Paginación en nominaciones.
 - Despliegue automático.
 
 
